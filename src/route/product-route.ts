@@ -1,5 +1,9 @@
+import {
+  createProduct,
+  getAllProducts,
+  getProductById,
+} from "../service/product-service";
 import express from "express";
-import { createProduct } from "../service/product-service";
 
 const router = express.Router();
 
@@ -11,6 +15,17 @@ router.post("/product", async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+});
+
+router.get("/product", (req, res) => {
+  const allProducts = getAllProducts();
+  res.send(allProducts);
+});
+
+router.get("/product/:id", (req, res) => {
+  const Products = getProductById(req.params.id);
+  console.log(Products, req.params.id);
+  res.send(Products);
 });
 
 export default router;
