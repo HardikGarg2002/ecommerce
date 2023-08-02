@@ -27,5 +27,30 @@ async function getProductById(productId: string) {
     throw error;
   }
 }
+async function updateProduct(productId: string, product: any) {
+  try {
+    return await productSchema.findByIdAndUpdate(productId, product, {
+      new: true,
+    });
+  } catch (error) {
+    console.log("error", error);
+    throw error;
+  }
+}
 
-export { createProduct, getAllProducts, getProductById };
+async function deleteProduct(productId: string) {
+  try {
+    return await productSchema.findByIdAndDelete(productId);
+  } catch (error) {
+    console.log("error", error);
+    throw error;
+  }
+}
+
+export {
+  createProduct,
+  getAllProducts,
+  getProductById,
+  updateProduct,
+  deleteProduct,
+};

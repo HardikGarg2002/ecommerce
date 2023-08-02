@@ -1,7 +1,9 @@
 import {
   createProduct,
+  deleteProduct,
   getAllProducts,
   getProductById,
+  updateProduct,
 } from "../service/product-service";
 import express from "express";
 
@@ -26,6 +28,19 @@ router.get("/product/:id", (req, res) => {
   const Products = getProductById(req.params.id);
   console.log(Products, req.params.id);
   res.send(Products);
+});
+
+router.patch("/product/:id", (req, res) => {
+  const product = req.body;
+  const id = req.params.id;
+  const updatedProduct = updateProduct(id, product);
+  res.send("Product Updated Successfully");
+});
+
+router.delete("/product/:id", (req, res) => {
+  const id = req.params.id;
+  const deletedProduct = deleteProduct(id);
+  res.send("Product Deleted Successfully");
 });
 
 export default router;
