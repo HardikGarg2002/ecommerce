@@ -2,10 +2,11 @@
   "name": "ecommerce",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "start": "npm run build && node dist/index.js",
+    "dev": "nodemon --watch src/**/*.ts --exec ts-node index.ts"
   },
   "keywords": [],
   "author": "",
@@ -13,11 +14,16 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "mongoose": "^7.1.0"
+    "mongoose": "^6.1.0"
   },
   "devDependencies": {
-    "@types/express": "^5.0.0",
+    "@types/express": "^4.16.0",
     "eslint": "^8.40.0",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "@types/cors": "^2.7.17",
+    "@types/dotenv": "^8.1.0",
+    "@types/mongoose": "^5.5.97",
+    "@types/node": "^20.6.2",
+    "typescript": "^5.1.3"
   }
 }
