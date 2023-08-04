@@ -1,0 +1,31 @@
+@url = http://localhost:6001
+@id = 65b76674a88039406c4684f7
+
+
+### GET all products
+GET {{url}}/api/products/{{id}}
+Content-Type: application/json
+
+
+### GET all products
+GET {{url}}/api/products
+Content-Type: application/json
+
+
+### POST create product
+POST {{url}}/api/products
+Content-Type: application/json
+
+{
+  "name": "Wireless Bluetooth Headphones",
+  "description": "High-quality wireless headphones with noise cancellation and long battery life.",
+  "cost": 3999,
+  "shortDesc": "Premium Bluetooth headphones",
+  "images": {
+    "primary": "https://example.com/images/headphones-primary.jpg",
+    "additional": [
+      "https://example.com/images/headphones-side.jpg",
+      "https://example.com/images/headphones-box.jpg"
+    ]
+  }
+}
