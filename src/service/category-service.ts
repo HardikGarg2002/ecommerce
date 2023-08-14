@@ -10,4 +10,22 @@ async function createCategory(category: any) {
   }
 }
 
-export { createCategory };
+async function getAllCategories() {
+  try {
+    return await Category.find();
+  } catch (error) {
+    console.log("error", error);
+    throw error;
+  }
+}
+
+async function getCategoryById(categoryId: string) {
+  try {
+    return await Category.findById(categoryId);
+  } catch (error) {
+    console.log("error", error);
+    throw error;
+  }
+}
+
+export { createCategory, getAllCategories, getCategoryById };
