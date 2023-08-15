@@ -28,4 +28,30 @@ async function getCategoryById(categoryId: string) {
   }
 }
 
-export { createCategory, getAllCategories, getCategoryById };
+async function updateCategory(categoryId: string, category: any) {
+  try {
+    return await Category.findByIdAndUpdate(categoryId, category, {
+      new: true,
+    });
+  } catch (error) {
+    console.log("error", error);
+    throw error;
+  }
+}
+
+async function deleteCategory(categoryId: string) {
+  try {
+    return await Category.findByIdAndDelete(categoryId);
+  } catch (error) {
+    console.log("error", error);
+    throw error;
+  }
+}
+
+export {
+  createCategory,
+  getAllCategories,
+  getCategoryById,
+  updateCategory,
+  deleteCategory,
+};

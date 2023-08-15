@@ -12,4 +12,10 @@ router.route("/").get(categoryService.getAllCategories);
 // Route to get category by id
 router.route("/:id").get(categoryService.getCategoryById);
 
+// Route to update category by id
+router.route("/:id").put(categoryService.updateCategory);
+
+// Route to delete category by id
+router.route("/:id").delete(categoryService.deleteCategory);
+
 export default router;
