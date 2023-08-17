@@ -10,4 +10,14 @@ async function createDisplayTag(displayTag: any) {
   }
 }
 
-export { createDisplayTag };
+async function getAllDisplayTags() {
+  try {
+    const displayTags = await DisplayTag.find();
+    return displayTags;
+  } catch (error) {
+    console.log("error", error);
+    throw error;
+  }
+}
+
+export { createDisplayTag, getAllDisplayTags };
