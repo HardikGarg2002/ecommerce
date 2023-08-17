@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const displayTagSchema = new Schema(
   {
-    slug: { type: String, required: true },
+    code: { type: String, required: true },
     img_url: { type: String, required: true },
     label: { type: String, required: true },
   },

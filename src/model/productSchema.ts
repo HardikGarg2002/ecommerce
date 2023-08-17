@@ -38,6 +38,13 @@ const productSchema = new mongoose.Schema(
         },
       ],
     },
+    display_tag: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "product_display_tag",
+        trim: true,
+      },
+    ],
     createdBy: String,
     updatedBy: String,
   },
