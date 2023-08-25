@@ -12,18 +12,22 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^6.1.0"
   },
   "devDependencies": {
-    "@types/express": "^4.16.0",
-    "eslint": "^8.40.0",
-    "nodemon": "^2.0.22",
+    "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.7.17",
     "@types/dotenv": "^8.1.0",
+    "@types/express": "^4.16.0",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/mongoose": "^5.5.97",
     "@types/node": "^20.6.2",
+    "eslint": "^8.40.0",
+    "nodemon": "^2.0.22",
     "typescript": "^5.1.3"
   }
 }

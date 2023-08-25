@@ -29,4 +29,25 @@ async function signup(userInput: any) {
   }
 }
 
-export { signup };
+async function login(userInput: any) {
+  try {
+    const existingUser = await User.findOne({ email: userInput.email });
+
+    if (
+      existingUser &&
+      (await bcrypt.compare(userInput.password, existingUser.password))
+    ) {
+      const secureInfo = sanitizeUser(existingUser);
+      const token = generateToken(secureInfo);
+      return token;
+    }
+    throw new Error("Invalid Credentials");
+  } catch (error) {
+    console.log(error);
+    throw new Error(
+      "Some error occurred while logging in, please try again later"
+    );
+  }
+}
+
+export { signup, login };
