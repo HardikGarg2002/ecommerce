@@ -1,13 +1,9 @@
 import express from "express";
-import { login, signup } from "../service/auth-service";
+import { login, resendOtp, signup, verifyOtp } from "../service/auth-service";
 // import { verifyToken } from "../middleware/VerifyToken";
 
 const router = express.Router();
 
-// router.post('/signup', signup);
-// router.post('/login', login);
-// router.post('/verify-otp', verifyOtp);
-// router.post('/resend-otp', resendOtp);
 // router.post('/forgot-password', forgotPassword);
 // router.post('/reset-password', resetPassword);
 // router.get('/check-auth', verifyToken, checkAuth);
@@ -35,6 +31,32 @@ router.post("/login", async (req, res) => {
       httpOnly: true,
       secure: process.env.PRODUCTION === "true" ? true : false,
     });
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+});
+
+// route to logout
+router.get("/logout", async (req, res) => {
+  res.clearCookie("token");
+  res.status(200).json({ message: "Logout Successful" });
+});
+
+// Route to verify OTP
+router.post("/verify-otp", async (req, res) => {
+  try {
+    const isValid = await verifyOtp(req, res);
+    res.status(200).json({ message: isValid });
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+});
+
+// Route to resend OTP
+router.post("/resend-otp", async (req, res) => {
+  try {
+    const isValid = await resendOtp(req.body.userId);
+    res.status(200).json({ message: isValid });
   } catch (error) {
     res.status(500).json({ message: error });
   }
