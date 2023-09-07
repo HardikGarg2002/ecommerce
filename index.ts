@@ -1,5 +1,14 @@
 import { Request, Response } from "express";
 import createServer from "./src/app";
+import authRouter from "./src/route/auth-route";
+import userRouter from "./src/route/user-route";
+import categoryRouter from "./src/route/category-route";
+import brandRouter from "./src/route/brand-route";
+import displayTagRouter from "./src/route/displayTag-route";
+import orderRouter from "./src/route/order-route";
+import productRouter from "./src/route/product-route";
+import wishlistRouter from "./src/route/wishlist-route";
+import addressRouter from "./src/route/address-route";
 
 const app = createServer();
 const port = process.env.PORT || 3000;
@@ -12,6 +21,17 @@ app.get("/", (req: Request, res: Response) => {
 
   res.send(response);
 });
+
+app.get("/user", userRouter);
+app.get("/category", categoryRouter);
+app.get("/brand", brandRouter);
+app.get("/displayTag", displayTagRouter);
+app.get("/order", orderRouter);
+app.get("/product", productRouter);
+app.get("/wishlist", wishlistRouter);
+app.get("/address", addressRouter);
+app.get("/auth", authRouter);
+
 // default end point
 app.use("*", (req, res) => {
   res.status(404).send({
