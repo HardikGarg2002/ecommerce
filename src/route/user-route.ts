@@ -11,3 +11,5 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ message: error });
   }
 });
+
+export default router;
