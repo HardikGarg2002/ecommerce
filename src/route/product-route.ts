@@ -10,7 +10,7 @@ import express from "express";
 const router = express.Router();
 
 // api to create product
-router.post("/product", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const product = await createProduct(req.body);
     res.json(product);
@@ -19,25 +19,25 @@ router.post("/product", async (req, res) => {
   }
 });
 
-router.get("/product", (req, res) => {
+router.get("/", (req, res) => {
   const allProducts = getAllProducts();
   res.send(allProducts);
 });
 
-router.get("/product/:id", (req, res) => {
+router.get("/:id", (req, res) => {
   const Products = getProductById(req.params.id);
   console.log(Products, req.params.id);
   res.send(Products);
 });
 
-router.patch("/product/:id", (req, res) => {
+router.patch("/:id", (req, res) => {
   const product = req.body;
   const id = req.params.id;
   const updatedProduct = updateProduct(id, product);
   res.send("Product Updated Successfully");
 });
 
-router.delete("/product/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
   const id = req.params.id;
   const deletedProduct = deleteProduct(id);
   res.send("Product Deleted Successfully");
