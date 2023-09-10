@@ -1,6 +1,6 @@
 import Category from "../model/category";
 
-async function createCategory(category: any) {
+export async function create(category: any) {
   try {
     const newCategory = new Category(category);
     return await newCategory.save();
@@ -10,7 +10,7 @@ async function createCategory(category: any) {
   }
 }
 
-async function getAllCategories() {
+export async function get() {
   try {
     return await Category.find();
   } catch (error) {
@@ -19,7 +19,7 @@ async function getAllCategories() {
   }
 }
 
-async function getCategoryById(categoryId: string) {
+export async function getById(categoryId: string) {
   try {
     return await Category.findById(categoryId);
   } catch (error) {
@@ -28,30 +28,23 @@ async function getCategoryById(categoryId: string) {
   }
 }
 
-async function updateCategory(categoryId: string, category: any) {
+export async function patch(categoryId: string, category: any): Promise<void> {
   try {
-    return await Category.findByIdAndUpdate(categoryId, category, {
-      new: true,
-    });
+    await Category.findByIdAndUpdate(categoryId, category);
   } catch (error) {
     console.log("error", error);
     throw error;
   }
 }
 
-async function deleteCategory(categoryId: string) {
+export async function patchStatus(
+  categoryId: string,
+  is_active: boolean
+): Promise<void> {
   try {
-    return await Category.findByIdAndDelete(categoryId);
+    await Category.findByIdAndUpdate(categoryId, { is_active });
   } catch (error) {
     console.log("error", error);
     throw error;
   }
 }
-
-export {
-  createCategory,
-  getAllCategories,
-  getCategoryById,
-  updateCategory,
-  deleteCategory,
-};

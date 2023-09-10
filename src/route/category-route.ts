@@ -6,7 +6,7 @@ const router = express.Router();
 // Route to create a new category
 router.route("/").post(async (req, res) => {
   try {
-    const category = await categoryService.createCategory(req.body);
+    const category = await categoryService.create(req.body);
     res.json(category);
   } catch (error) {
     res.status(500).json({ message: error });
@@ -16,7 +16,7 @@ router.route("/").post(async (req, res) => {
 // Route to get all categories
 router.route("/").get(async (req, res) => {
   try {
-    const categories = await categoryService.getAllCategories();
+    const categories = await categoryService.get();
     res.json(categories);
   } catch (error) {
     res.status(500).json({ message: error });
@@ -26,7 +26,7 @@ router.route("/").get(async (req, res) => {
 // Route to get category by id
 router.route("/:id").get(async (req, res) => {
   try {
-    const category = await categoryService.getCategoryById(req.params.id);
+    const category = await categoryService.getById(req.params.id);
     res.json(category);
   } catch (error) {
     res.status(500).json({ message: error });
@@ -36,10 +36,7 @@ router.route("/:id").get(async (req, res) => {
 // Route to update category by id
 router.route("/:id").put(async (req, res) => {
   try {
-    const category = await categoryService.updateCategory(
-      req.params.id,
-      req.body
-    );
+    const category = await categoryService.patch(req.params.id, req.body);
     res.json(category);
   } catch (error) {
     res.status(500).json({ message: error });
@@ -49,7 +46,11 @@ router.route("/:id").put(async (req, res) => {
 // Route to delete category by id
 router.route("/:id").delete(async (req, res) => {
   try {
-    const category = await categoryService.deleteCategory(req.params.id);
+    const is_active = false;
+    const category = await categoryService.patchStatus(
+      req.params.id,
+      is_active
+    );
     res.json(category);
   } catch (error) {
     res.status(500).json({ message: error });
