@@ -1,20 +1,33 @@
 import express from "express";
-import { createBrand, getAllBrands } from "../service/brand-service";
+import * as brandService from "../service/brand-service";
 
 const router = express.Router();
 
 router.post("/", async (req, res) => {
   try {
-    const brand = await createBrand(req.body);
+    const brand = await brandService.create(req.body);
     res.json(brand);
   } catch (error) {
     res.status(500).json({ message: error });
   }
 });
 
-router.get("/", (req, res) => {
-  const allBrands = getAllBrands();
-  res.send(allBrands);
+router.get("/", async (req, res) => {
+  try {
+    const allBrands = await brandService.get();
+    res.send(allBrands);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    const brand = await brandService.getById(req.params.id);
+    res.send(brand);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
 });
 
 export default router;
