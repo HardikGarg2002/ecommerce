@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/user/:id", async (req, res) => {
   try {
-    const wishlist = await wishlistService.getWishlistByUserId(req.params.id);
+    const wishlist = await wishlistService.getByUserId(req.params.id);
     res.json(wishlist);
   } catch (error) {
     res.status(500).json({ message: error });
@@ -14,7 +14,7 @@ router.get("/user/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const wishlist = await wishlistService.createWishlist(req.body);
+    const wishlist = await wishlistService.create(req.body);
     res.json(wishlist);
   } catch (error) {
     res.status(500).json({ message: error });
