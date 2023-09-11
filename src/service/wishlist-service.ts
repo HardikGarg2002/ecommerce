@@ -33,3 +33,12 @@ export async function update(wishlistId: string, wishlist: any) {
 export async function deleteWishlist(wishlistId: string) {
   return await Wishlist.findByIdAndDelete(wishlistId);
 }
+
+export async function addProduct(wishlistId: string, productId: string) {
+  const wishlist = await Wishlist.findById(wishlistId);
+  if (!wishlist) {
+    throw new Error("wishlist not found");
+  }
+  wishlist.products.push(productId as any);
+  return await wishlist.save();
+}

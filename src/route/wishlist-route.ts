@@ -21,4 +21,16 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.post("/:id/product/:productId", async (req, res) => {
+  try {
+    const wishlist = await wishlistService.addProduct(
+      req.params.id,
+      req.params.productId
+    );
+    res.json(wishlist);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+});
+
 export default router;
