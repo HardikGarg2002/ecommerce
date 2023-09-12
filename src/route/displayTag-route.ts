@@ -1,14 +1,11 @@
 import express from "express";
-import {
-  createDisplayTag,
-  getAllDisplayTags,
-} from "../service/displayTag-service";
+import * as displayTagService from "../service/displayTag-service";
 
 const router = express.Router();
 
 router.post("/", async (req, res) => {
   try {
-    const displayTag = await createDisplayTag(req.body);
+    const displayTag = await displayTagService.create(req.body);
     res.json(displayTag);
   } catch (error) {
     res.status(500).json({ message: error });
@@ -16,7 +13,7 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", (req, res) => {
-  const allDisplayTags = getAllDisplayTags();
+  const allDisplayTags = displayTagService.get();
   res.send(allDisplayTags);
 });
 
