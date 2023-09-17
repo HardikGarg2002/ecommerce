@@ -1,56 +1,26 @@
 import productSchema from "../model/productSchema";
 
-async function createProduct(product: any) {
-  try {
-    const newProduct = new productSchema(product);
-    return await newProduct.save();
-  } catch (error) {
-    console.log("error", error);
-    throw error;
-  }
+export async function create(product: any) {
+  const newProduct = new productSchema(product);
+  return await newProduct.save();
 }
 
-async function getAllProducts() {
-  try {
-    return await productSchema.find();
-  } catch (error) {
-    console.log("error", error);
-    throw error;
-  }
+export async function get() {
+  return await productSchema.find();
 }
 
-async function getProductById(productId: string) {
-  try {
-    return await productSchema.findById(productId);
-  } catch (error) {
-    console.log("error", error);
-    throw error;
-  }
+export async function getById(productId: string) {
+  return await productSchema.findById(productId);
 }
-async function updateProduct(productId: string, product: any) {
-  try {
-    return await productSchema.findByIdAndUpdate(productId, product, {
-      new: true,
-    });
-  } catch (error) {
-    console.log("error", error);
-    throw error;
-  }
+export async function update(productId: string, product: any): Promise<void> {
+  await productSchema.findByIdAndUpdate(productId, product);
 }
 
-async function deleteProduct(productId: string) {
-  try {
-    return await productSchema.findByIdAndDelete(productId);
-  } catch (error) {
-    console.log("error", error);
-    throw error;
-  }
+export async function patchStatus(
+  productId: string,
+  status: boolean
+): Promise<void> {
+  await productSchema.findByIdAndUpdate(productId, {
+    is_active: status,
+  });
 }
-
-export {
-  createProduct,
-  getAllProducts,
-  getProductById,
-  updateProduct,
-  deleteProduct,
-};

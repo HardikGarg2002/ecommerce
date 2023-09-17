@@ -1,10 +1,4 @@
-import {
-  createProduct,
-  deleteProduct,
-  getAllProducts,
-  getProductById,
-  updateProduct,
-} from "../service/product-service";
+import * as productService from "../service/product-service";
 import express from "express";
 
 const router = express.Router();
@@ -12,7 +6,7 @@ const router = express.Router();
 // api to create product
 router.post("/", async (req, res) => {
   try {
-    const product = await createProduct(req.body);
+    const product = await productService.create(req.body);
     res.json(product);
   } catch (error) {
     res.status(500).json({ message: error });
@@ -20,12 +14,12 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", (req, res) => {
-  const allProducts = getAllProducts();
+  const allProducts = productService.get();
   res.send(allProducts);
 });
 
 router.get("/:id", (req, res) => {
-  const Products = getProductById(req.params.id);
+  const Products = productService.getById(req.params.id);
   console.log(Products, req.params.id);
   res.send(Products);
 });
@@ -33,13 +27,13 @@ router.get("/:id", (req, res) => {
 router.patch("/:id", (req, res) => {
   const product = req.body;
   const id = req.params.id;
-  const updatedProduct = updateProduct(id, product);
+  const updatedProduct = productService.update(id, product);
   res.send("Product Updated Successfully");
 });
 
 router.delete("/:id", (req, res) => {
   const id = req.params.id;
-  const deletedProduct = deleteProduct(id);
+  const deletedProduct = productService.patchStatus(id, false);
   res.send("Product Deleted Successfully");
 });
 

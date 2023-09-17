@@ -25,6 +25,7 @@ const productSchema = new mongoose.Schema(
       type: String,
       maxlength: 400,
     },
+    is_active: Boolean,
     images: {
       primary: {
         type: String,
