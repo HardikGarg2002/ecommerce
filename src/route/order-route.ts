@@ -14,7 +14,7 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const orders = await orderService.getAll();
+    const orders = await orderService.get();
     res.json(orders);
   } catch (error) {
     res.status(500).json({ message: error });
@@ -23,7 +23,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const order = await orderService.getOrderById(req.params.id);
+    const order = await orderService.getById(req.params.id);
     res.json(order);
   } catch (error) {
     res.status(500).json({ message: error });

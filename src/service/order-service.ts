@@ -1,50 +1,25 @@
 import Order from "../model/order";
 
 export const create = async (orderInput: any) => {
-  try {
-    const order = new Order(orderInput);
-    return await order.save();
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
+  const order = new Order(orderInput);
+  return await order.save();
 };
 
-export const getOrderById = async (orderId: string) => {
-  try {
-    const result = await Order.findById(orderId);
-    return result;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
+export const getById = async (orderId: string) => {
+  const result = await Order.findById(orderId);
+  return result;
 };
 
 export const getOrdersByUserId = async (userId: string) => {
-  try {
-    const results = await Order.find({ user: userId });
-    return results;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
+  const results = await Order.find({ user: userId });
+  return results;
 };
 
-export const getAll = async () => {
-  try {
-    const results = await Order.find({});
-    return results;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
+export const get = async () => {
+  const results = await Order.find({});
+  return results;
 };
 
 export const patchStatus = async (orderId: string, status: string) => {
-  try {
-    await Order.findByIdAndUpdate(orderId, { status }, { new: true });
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
+  await Order.findByIdAndUpdate(orderId, { status }, { new: true });
 };
