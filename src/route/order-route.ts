@@ -12,4 +12,31 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.get("/", async (req, res) => {
+  try {
+    const orders = await orderService.getAll();
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    const order = await orderService.getOrderById(req.params.id);
+    res.json(order);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+});
+
+router.get("/user/:id", async (req, res) => {
+  try {
+    const orders = await orderService.getOrdersByUserId(req.params.id);
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+});
+
 export default router;
