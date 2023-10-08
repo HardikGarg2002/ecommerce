@@ -39,3 +39,12 @@ export const getAll = async () => {
     throw error;
   }
 };
+
+export const patchStatus = async (orderId: string, status: string) => {
+  try {
+    await Order.findByIdAndUpdate(orderId, { status }, { new: true });
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

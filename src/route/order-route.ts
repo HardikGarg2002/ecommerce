@@ -39,4 +39,14 @@ router.get("/user/:id", async (req, res) => {
   }
 });
 
+router.put("/:id/status", async (req, res) => {
+  try {
+    const status = req.body.status;
+    const order = await orderService.patchStatus(req.params.id, status);
+    res.json(order);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+});
+
 export default router;
