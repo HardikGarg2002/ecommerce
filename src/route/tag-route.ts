@@ -33,4 +33,38 @@ router.route("/:id").get((req, res) => {
   }
 });
 
+//Route to edit a tag by id (only active) (also send meta data for the affected fields future prospective)
+router.route("/:id").patch((req, res) => {
+  try {
+    const tag = req.body;
+    const id = req.params.id;
+    const updatedTag = tagHandler.patch(id, tag);
+    res.send("Tag Updated Successfully");
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+});
+
+//Route to delete a tag by id (not assigned)    hard delete
+router.route("/:id").delete((req, res) => {
+  try {
+    const id = req.params.id;
+    const deletedTag = tagHandler.remove(id);
+    res.send("Tag Deleted Successfully");
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+});
+
+// Route to edit a status by id (any) (also send meta data for the affected fields)
+router.route("/:id/status").patch((req, res) => {
+  try {
+    const status = req.body.status;
+    const tag = tagHandler.patchStatus(req.params.id, status);
+    res.json(tag);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+});
+
 export default router;

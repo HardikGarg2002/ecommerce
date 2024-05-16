@@ -16,3 +16,20 @@ export async function getById(tagId: string) {
   }
   return tag;
 }
+
+export async function patch(tagId: string, tagInput: any): Promise<void> {
+  await Tag.findByIdAndUpdate(tagId, tagInput);
+}
+
+export async function remove(tagId: string): Promise<void> {
+  await Tag.findByIdAndDelete(tagId);
+}
+
+export async function patchStatus(
+  tagId: string,
+  status: boolean
+): Promise<void> {
+  await Tag.findByIdAndUpdate(tagId, {
+    is_active: status,
+  });
+}
