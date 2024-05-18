@@ -12,3 +12,14 @@ router.post("/", async (req, res) => {
     res.status(500).json({ message: error });
   }
 });
+
+router.get("/", (req, res) => {
+  const allHsns = hsnService.get();
+  res.send(allHsns);
+});
+
+router.get("/:id", (req, res) => {
+  const hsns = hsnService.getById(req.params.id);
+  console.log(hsns, req.params.id);
+  res.send(hsns);
+});
