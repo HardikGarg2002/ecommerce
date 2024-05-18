@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
+import { ICategory } from "../interface/category";
 
-const categorySchema = new Schema(
+const categorySchema = new Schema<ICategory>(
   {
     name: {
       type: String,
@@ -8,11 +9,13 @@ const categorySchema = new Schema(
       trim: true,
       unique: true,
     },
+
     desc: {
       type: String,
       required: true,
       trim: true,
     },
+
     code: {
       type: String,
       uppercase: true,
@@ -21,27 +24,26 @@ const categorySchema = new Schema(
       index: true,
       immutable: true,
     },
+
     is_active: {
       type: Boolean,
       default: true,
     },
+
     img_url: {
       type: String,
       required: true,
       trim: true,
     },
+    createdBy: String,
+    updatedBy: String,
     sort: {
       type: Number,
       required: true,
     },
-    createdBy: String,
-    updatedBy: String,
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
-
 const Category = mongoose.model("categories", categorySchema);
 
 export default Category;
