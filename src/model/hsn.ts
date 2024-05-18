@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import { IHsn } from "../interface/hsn";
 
-const hsnSchema = new mongoose.Schema({
+const hsnSchema = new mongoose.Schema<IHsn>({
   code: {
     type: String,
     required: true,
@@ -50,4 +51,4 @@ const hsnSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("hsns", hsnSchema);
+export default mongoose.model<IHsn>("hsns", hsnSchema);
