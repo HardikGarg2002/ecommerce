@@ -11,3 +11,13 @@ router.post("/", async (req, res) => {
     res.status(500).json({ message: error });
   }
 });
+
+router.get("/", async (req, res) => {
+  const allStores = await storeService.get();
+  res.send(allStores);
+});
+
+router.get("/:id", async (req, res) => {
+  const store = await storeService.getById(req.params.id);
+  res.send(store);
+});
