@@ -23,3 +23,5 @@ router.get("/:id", (req, res) => {
   console.log(hsns, req.params.id);
   res.send(hsns);
 });
+
+export default router;

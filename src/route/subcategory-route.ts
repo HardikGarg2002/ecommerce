@@ -20,3 +20,5 @@ router.get("/:id", (req, res) => {
   const subcategory = subcategoryService.getById(req.params.id);
   res.send(subcategory);
 });
+
+export default router;
