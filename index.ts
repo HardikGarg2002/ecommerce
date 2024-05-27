@@ -11,7 +11,8 @@ import productRouter from "./src/route/product-route";
 import wishlistRouter from "./src/route/wishlist-route";
 import addressRouter from "./src/route/address-route";
 import hsnRouter from "./src/route/hsn-route";
-// import featureRouter from "./src/route/feature-route";
+import tagRouter from "./src/route/tag-route";
+import featureRouter from "./src/route/feature-route";
 
 const app = createServer();
 const port = process.env.PORT || 3000;
@@ -36,6 +37,8 @@ app.get("/wishlist", wishlistRouter);
 app.get("/address", addressRouter);
 app.get("/hsn", hsnRouter);
 app.get("/auth", authRouter);
+app.get("/tag", tagRouter);
+app.get("/feature", featureRouter);
 
 // default end point
 app.use("*", (req, res) => {
