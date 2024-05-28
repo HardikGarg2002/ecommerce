@@ -1,26 +1,28 @@
-import productSchema from "../model/productSchema";
+import Product from "../model/product";
 
 export async function create(product: any) {
-  const newProduct = new productSchema(product);
+  const newProduct = new Product(product);
   return await newProduct.save();
 }
 
 export async function get() {
-  return await productSchema.find();
+  return await Product.find();
 }
 
 export async function getById(productId: string) {
-  return await productSchema.findById(productId);
+  const product = await Product.findById(productId);
+  if (!product) throw new Error("Product not found");
+  return product;
 }
 export async function update(productId: string, product: any): Promise<void> {
-  await productSchema.findByIdAndUpdate(productId, product);
+  await Product.findByIdAndUpdate(productId, product);
 }
 
 export async function patchStatus(
   productId: string,
   status: boolean
 ): Promise<void> {
-  await productSchema.findByIdAndUpdate(productId, {
+  await Product.findByIdAndUpdate(productId, {
     is_active: status,
   });
 }
