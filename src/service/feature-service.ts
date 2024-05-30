@@ -16,3 +16,11 @@ export async function getById(id: string): Promise<IFeature> {
   if (!feature) throw new Error("Feature not found");
   return feature;
 }
+
+export async function patch(id: string, featureInput: Partial<IFeature>) {
+  await Feature.findByIdAndUpdate(id, featureInput);
+}
+
+export async function remove(categoryId: string): Promise<void> {
+  await Feature.findByIdAndDelete(categoryId);
+}
