@@ -1,23 +1,24 @@
 import express from "express";
-import * as storeService from "../service/store-service";
+import * as storeHandler from "../handler/store-handler";
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {
-  try {
-    const store = await storeService.create(req.body);
-    res.json(store);
-  } catch (error) {
-    res.status(500).json({ message: error });
-  }
-});
+// Route to create a new store
+router.route("/").post(storeHandler.create);
 
-router.get("/", async (req, res) => {
-  const allStores = await storeService.get();
-  res.send(allStores);
-});
+//Route to get all store
+router.route("/").get(storeHandler.get);
 
-router.get("/:id", async (req, res) => {
-  const store = await storeService.getById(req.params.id);
-  res.send(store);
-});
+//Route to get all stores based on searchText
+router.route("/search").get(storeHandler.search);
+
+//Route to get a store by id
+router.route("/:id").get(storeHandler.getById);
+
+//Route to edit a store by id (only active) (also send meta data for the affected fields future prospective)
+router.route("/:id").patch(storeHandler.patch);
+
+// Route to edit a status by id (any) (also send meta data for the affected fields)
+router.route("/:id/status").patch(storeHandler.activate);
+
+export default router;
