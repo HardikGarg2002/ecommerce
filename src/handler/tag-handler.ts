@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import * as tagService from "../service/tag-service";
 import { IUser } from "../interface/user";
 import { ITag } from "../interface/tag";
-// const tagController = new TagController();
 
 export const create = async (
   req: Request,

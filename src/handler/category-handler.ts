@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import * as CategoryService from "../service/category-service";
 import { IUser } from "../interface/user";
 import { ICategory } from "../interface/category";
-// const categoryController = new CategoryController();
 
 export const create = async (
   req: Request,
