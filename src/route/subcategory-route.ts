@@ -1,24 +1,27 @@
-import * as subcategoryService from "../service/subcategory-service";
-import { Router } from "express";
-const router = Router();
+import express from "express";
+import * as subcategoryHandler from "../handler/subcategory-handler";
 
-router.post("/", async (req, res) => {
-  try {
-    const subcategory = await subcategoryService.create(req.body);
-    res.json(subcategory);
-  } catch (error) {
-    res.status(500).json({ message: error });
-  }
-});
+const router = express.Router();
 
-router.get("/", (req, res) => {
-  const allSubcategories = subcategoryService.get();
-  res.send(allSubcategories);
-});
+// Route to create a new subcategory
+router.route("/").post(subcategoryHandler.create);
 
-router.get("/:id", (req, res) => {
-  const subcategory = subcategoryService.getById(req.params.id);
-  res.send(subcategory);
-});
+//Route to get all subcategories
+router.route("/").get(subcategoryHandler.get);
+
+//Route to get all subcategories based on searchText
+// router.route("/search").get(subcategoryHandler.search);
+
+//Route to get a subcategory by id
+router.route("/:id").get(subcategoryHandler.getById);
+
+//Route to edit a subcategory by id (only active) (also send meta data for the affected fields future prospective)
+router.route("/:id").patch(subcategoryHandler.patch);
+
+//Route to delete a subcategory by id (not assigned to any product)    hard delete
+router.route("/:id").delete(subcategoryHandler.remove);
+
+// Route to edit a status by id (any) (also send meta data for the affected fields)
+router.route("/:id/status").patch(subcategoryHandler.patchStatus);
 
 export default router;
