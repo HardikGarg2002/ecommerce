@@ -6,8 +6,8 @@ export interface ITag {
   text: string;
   slug: string;
   is_active?: boolean;
-  created?: IUser;
-  updated?: IUser;
+  created: IUser;
+  updated: IUser;
 }
 
 export interface ITagWithMeta {

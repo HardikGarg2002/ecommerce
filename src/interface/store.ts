@@ -1,4 +1,5 @@
 import { IPagination } from "./pagination";
+import { IUser } from "./user";
 
 export interface IStore {
   _id?: string;
@@ -7,9 +8,9 @@ export interface IStore {
   code: string;
   is_active?: boolean;
   city_key: string;
-  createdBy: string;
-  updatedBy: string;
   sort: number;
+  created: IUser;
+  updated: IUser;
 }
 
 export interface IStoreWithMeta {

@@ -1,4 +1,5 @@
 import { IPagination } from "./pagination";
+import { IUser } from "./user";
 
 export interface IBanner {
   _id?: string;
@@ -12,8 +13,8 @@ export interface IBanner {
   img_url: string;
   redirect_url: string;
   location: { type: IBannerType; code: string | undefined };
-  createdBy: string;
-  updatedBy: string;
+  created: IUser;
+  updated: IUser;
 }
 
 export enum IBannerType {

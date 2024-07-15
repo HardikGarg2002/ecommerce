@@ -5,8 +5,8 @@ export interface IAlias {
   _id?: string;
   name: string;
   is_active?: boolean;
-  createdBy: string;
-  updatedBy: string;
+  created: IUser;
+  updated: IUser;
 }
 
 export interface IAliasWithMeta {

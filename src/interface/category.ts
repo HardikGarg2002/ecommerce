@@ -1,4 +1,5 @@
 import { IPagination } from "./pagination";
+import { IUser } from "./user";
 
 export interface ICategory {
   _id?: string;
@@ -7,8 +8,8 @@ export interface ICategory {
   code?: string;
   is_active?: boolean;
   img_url: string;
-  createdBy: string;
-  updatedBy: string;
+  created: IUser;
+  updated: IUser;
   sort: number;
 }
 
