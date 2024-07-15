@@ -11,9 +11,9 @@ export const create = async (
   try {
     const user: IUser = req.body.loggedInUser;
     const categoryInput: ICategory = req.body;
-    categoryInput.createdBy = user.name;
+    categoryInput.created = user;
 
-    categoryInput.updatedBy = categoryInput.createdBy;
+    categoryInput.updated = categoryInput.created;
     const id = await CategoryService.create(categoryInput);
     res.status(201).json({ message: "category created successfully", id });
   } catch (err) {

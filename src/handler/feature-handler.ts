@@ -34,8 +34,8 @@ export const create = async (
   try {
     const user: IUser = req.body.loggedInUser;
     const featureInput: IFeature = req.body;
-    featureInput.createdBy = user.name;
-    featureInput.updatedBy = featureInput.createdBy;
+    featureInput.created = user;
+    featureInput.updated = featureInput.created;
     const id = await featureService.create(featureInput);
     res.status(201).json({ message: "feature created successfully", id });
   } catch (err) {
