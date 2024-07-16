@@ -24,3 +24,26 @@ export const create = async (
     next(err);
   }
 };
+
+export const get = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const aliases = await aliasController.get();
+    res.status(200).json(aliases);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const aliasId = req.params.id;
+    const alias = await aliasController.getById(aliasId);
+    res.status(200).json(alias);
+  } catch (err) {
+    next(err);
+  }
+};
