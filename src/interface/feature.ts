@@ -1,4 +1,5 @@
 import { IPagination } from "./pagination";
+import { IUser } from "./user";
 
 export interface IFeature {
   _id?: string;
@@ -7,8 +8,8 @@ export interface IFeature {
   code: string;
   type: string;
   sort: number;
-  createdBy: string;
-  updatedBy: string;
+  created: IUser;
+  updated: IUser;
 }
 
 export interface IFeatureWithMeta {

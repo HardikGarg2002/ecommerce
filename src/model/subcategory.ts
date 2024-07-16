@@ -1,57 +1,71 @@
 import mongoose from "mongoose";
 import { ISubcategory } from "../interface/subcategory";
 
-const subcategorySchema = new mongoose.Schema<ISubcategory>(
-  {
+const subcategorySchema = new mongoose.Schema<ISubcategory>({
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+    unique: true,
+  },
+  desc: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  category_code: {
+    type: String,
+    uppercase: true,
+  },
+  code: {
+    type: String,
+    uppercase: true,
+    trim: true,
+    unique: true,
+    index: true,
+    immutable: true,
+  },
+  is_active: {
+    type: Boolean,
+    default: true,
+  },
+  img_url: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+
+  created: {
     name: {
       type: String,
-      required: true,
-      trim: true,
-      unique: true,
     },
-    desc: {
+    _id: {
       type: String,
-      required: true,
-      trim: true,
     },
-    category_code: {
-      type: String,
-      uppercase: true,
-    },
-    code: {
-      type: String,
-      uppercase: true,
-      trim: true,
-      unique: true,
-      index: true,
-      immutable: true,
-    },
-    is_active: {
-      type: Boolean,
-      default: true,
-    },
-    img_url: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-
-    createdBy: {
-      type: String,
-      required: true,
-    },
-    updatedBy: {
-      type: String,
-      required: true,
-    },
-
-    sort: {
-      type: Number,
-      required: true,
+    date: {
+      type: Date,
+      default: Date.now,
     },
   },
-  { timestamps: true }
-);
+
+  updated: {
+    name: {
+      type: String,
+    },
+    _id: {
+      type: String,
+    },
+    date: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+
+  sort: {
+    type: Number,
+    required: true,
+  },
+});
 
 subcategorySchema.pre("save", function () {
   this.sort = Math.floor(this.sort);

@@ -1,31 +1,49 @@
 import mongoose, { Schema } from "mongoose";
 import { IAlias } from "../interface/alias";
 
-const aliasSchema = new Schema<IAlias>(
-  {
+const aliasSchema = new Schema<IAlias>({
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+    unique: true,
+    lowercase: true,
+  },
+
+  is_active: {
+    type: Boolean,
+    default: true,
+  },
+
+  created: {
+    _id: {
+      type: String,
+      immutable: true,
+    },
     name: {
       type: String,
-      required: true,
-      trim: true,
-      unique: true,
-      lowercase: true,
+      immutable: true,
     },
-
-    is_active: {
-      type: Boolean,
-      default: true,
-    },
-    createdBy: {
-      type: String,
-      required: true,
-    },
-    updatedBy: {
-      type: String,
-      required: true,
+    date: {
+      type: Date,
+      default: Date.now,
+      immutable: true,
     },
   },
-  { timestamps: true }
-);
+
+  updated: {
+    _id: {
+      type: String,
+    },
+    name: {
+      type: String,
+    },
+    date: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+});
 
 const Alias = mongoose.model<IAlias>("aliases", aliasSchema);
 

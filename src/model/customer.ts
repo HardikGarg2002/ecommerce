@@ -18,3 +18,5 @@ const customerSchema = new mongoose.Schema<ICustomer>({
 });
 
 const Customer = mongoose.model<ICustomer>("Customers", customerSchema);
+
+export default Customer;

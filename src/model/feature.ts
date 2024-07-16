@@ -29,8 +29,34 @@ const featureSchema = new Schema<IFeature>({
     trim: true,
   },
 
-  createdBy: String,
-  updatedBy: String,
+  created: {
+    _id: {
+      type: String,
+      immutable: true,
+    },
+    name: {
+      type: String,
+      immutable: true,
+    },
+    date: {
+      type: Date,
+      immutable: true,
+      default: Date.now,
+    },
+  },
+
+  updated: {
+    _id: {
+      type: String,
+    },
+    name: {
+      type: String,
+    },
+    date: {
+      type: Date,
+      default: Date.now,
+    },
+  },
 
   sort: {
     type: Number,

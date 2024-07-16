@@ -26,8 +26,8 @@ export interface IVariant {
   _id: ObjectId | string;
   type: IVariantType;
   products: IVariantProduct[];
-  created: IUser;
-  updated: IUser;
+  created?: IUser;
+  updated?: IUser;
 }
 
 export interface IVariantWithMeta {
