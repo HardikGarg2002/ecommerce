@@ -47,3 +47,35 @@ export const getById = async (
     next(err);
   }
 };
+
+export const patch = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user: IUser = req.body.loggedInUser;
+    const aliasId = req.params.id;
+    const { name, reason } = req.body;
+    await aliasController.patch(aliasId, reason, user, name);
+    res.status(200).json({ message: "alias updated successfully" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const patchStatus = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user: IUser = req.body.loggedInUser;
+    const aliasId = req.params.id;
+    const { reason, is_active } = req.body;
+    await aliasController.activate(aliasId, reason, user, is_active);
+    res.status(200).json({ message: "alias status updated successfully" });
+  } catch (err) {
+    next(err);
+  }
+};

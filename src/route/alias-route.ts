@@ -15,4 +15,10 @@ router.route("/").get(aliasHandler.get);
 //Route to get a alias by id
 router.route("/:id").get(aliasHandler.getById);
 
+//Route to edit a alias by id (only active) (also send meta data for the affected fields future prospective)
+router.route("/:id").patch(aliasHandler.patch);
+
+// Route to edit a status by id (any) (also send meta data for the affected fields)
+router.route("/:id/status").patch(aliasHandler.patchStatus);
+
 export default router;
