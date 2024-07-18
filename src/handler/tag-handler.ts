@@ -11,8 +11,8 @@ export const create = async (
   try {
     const user: IUser = req.body.loggedInUser;
     const tagInput: ITag = req.body;
-    tagInput.createdBy = user.name;
-    tagInput.updatedBy = tagInput.createdBy;
+    tagInput.created = user;
+    tagInput.updated = tagInput.created;
     const _id = await tagService.create(tagInput);
     res.status(200).json({ message: "Tag created Successfully", id: _id });
   } catch (error) {
