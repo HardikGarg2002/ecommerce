@@ -72,8 +72,8 @@ export const patchStatus = async (
   try {
     const user: IUser = req.body.loggedInUser;
     const aliasId = req.params.id;
-    const { reason, is_active } = req.body;
-    await aliasController.activate(aliasId, reason, user, is_active);
+    const { is_active } = req.body;
+    await aliasController.activate(aliasId, is_active);
     res.status(200).json({ message: "alias status updated successfully" });
   } catch (err) {
     next(err);
