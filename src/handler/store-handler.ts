@@ -55,15 +55,7 @@ export const patch = async (
     const user = req.body.loggedInUser;
     const storeId = req.params.id;
     const { name, desc, city_key, sort, reason } = req.body;
-    await storeController.patch(
-      storeId,
-      user,
-      reason,
-      name,
-      desc,
-      city_key,
-      sort
-    );
+    await storeController.patch(storeId, user, name, desc, city_key, sort);
     res.status(200).json({ message: "store updated successfully" });
   } catch (err) {
     next(err);
@@ -78,8 +70,8 @@ export const activate = async (
   try {
     const user = req.body.loggedInUser;
     const storeId = req.params.id;
-    const { reason, is_active } = req.body;
-    await storeController.activate(storeId, user, reason, is_active);
+    const { is_active } = req.body;
+    await storeController.patchStatus(storeId, is_active);
     res.status(200).json({ message: "store status updated successfully" });
   } catch (err) {
     next(err);
