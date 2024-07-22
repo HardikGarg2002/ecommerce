@@ -51,3 +51,112 @@ export const create = async (
     next(err);
   }
 };
+
+export const patch = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user: IUser = req.body.loggedInUser;
+    const productId = req.params.id;
+    const { reason } = req.body;
+    const {
+      name,
+      desc,
+      sku,
+      sort,
+      category_code,
+      subcategory_code,
+    }: Partial<IProduct> = req.body;
+    await productController.patch(productId, user, reason, {
+      name,
+      desc,
+      sku,
+      sort,
+      category_code,
+      subcategory_code,
+    });
+    res.status(200).json({ message: "Product updated successfully" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const activate = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user: IUser = req.body.loggedInUser;
+    const productId = req.params.id;
+    const { reason, is_active } = req.body;
+
+    await productController.activate(productId, user, reason, is_active);
+    res.status(200).json({ message: "Product status updated successfully" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const patchOffer = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user: IUser = req.body.loggedInUser;
+    const productId = req.params.id;
+    const { reason, offer } = req.body;
+
+    await productController.patchOffer(productId, user, reason, offer);
+    res
+      .status(200)
+      .json({ message: "Product offer status updated successfully" });
+  } catch (err) {
+    next(err);
+  }
+};
+export const patchPrice = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user: IUser = req.body.loggedInUser;
+    const productId = req.params.id;
+    const priceDetails: IProductPrices = req.body.prices;
+    const { hsn_code, reason } = req.body;
+
+    await productController.patchPrice(
+      productId,
+      user,
+      reason,
+      priceDetails,
+      hsn_code
+    );
+    res.status(200).json({ message: "Product prices updated successfully" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const patchOos = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user: IUser = req.body.loggedInUser;
+    const productId = req.params.id;
+    const { oos } = req.body;
+
+    await productController.patchOos(productId, user, oos);
+    res.status(200).json({
+      message: "Product stock availability status updated successfully",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
