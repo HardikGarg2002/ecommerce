@@ -193,3 +193,40 @@ export const removeTag = async (
     next(err);
   }
 };
+
+export const addImages = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const productId = req.params.id;
+    const { images } = req.body;
+    const user: IUser = req.body.loggedInUser;
+    await productController.addImages(productId, images, user);
+    res
+      .status(200)
+      .json({ message: "Image added successfully to the product" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const removeImage = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const productId = req.params.id;
+    const imageUrl = req.params.img_url;
+    const user: IUser = req.body.loggedInUser;
+
+    await productController.removeImage(productId, imageUrl, user);
+    res
+      .status(200)
+      .json({ message: "Image removed successfully from the product" });
+  } catch (err) {
+    next(err);
+  }
+};
