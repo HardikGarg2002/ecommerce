@@ -263,3 +263,86 @@ export const removeAlias = async (
     next(error);
   }
 };
+
+export const addFeatures = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const productId = req.params.id;
+    const user = req.body.loggedInUser;
+    const { features }: { features: IProductFeatures[] } = req.body;
+    await productController.addFeatures(productId, user, features);
+    res.status(200).json({ message: "Features added successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const removeFeature = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user: IUser = req.body.loggedInUser;
+    const productId = req.params.id;
+    const code = req.params.code;
+    const { reason } = req.body;
+    await productController.removeFeature(productId, code, reason, user);
+    res.status(200).json({
+      message: `Feature with code ${code
+        .toUpperCase()
+        .trim()} removed successfully`,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const addRelatedProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const productId = req.params.id;
+    const user = req.body.loggedInUser;
+    const relatedProductIds: string[] = req.body.relatedproducts;
+    const twoWay = req.body.two_way;
+    await productController.addRelatedProduct(
+      productId,
+      user,
+      relatedProductIds,
+      twoWay
+    );
+    res.status(200).json({ message: "relatedProduct added successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const removeRelatedProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const productId = req.params.id;
+    const user = req.body.loggedInUser;
+    const relatedProductId = req.params.relatedproduct_id;
+    const reason = req.body.reason;
+    const twoWay = req.body.two_way;
+    await productController.removeRelatedProduct(
+      productId,
+      user,
+      reason,
+      relatedProductId,
+      twoWay
+    );
+    res.status(200).json({ message: "relatedProduct removed successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
