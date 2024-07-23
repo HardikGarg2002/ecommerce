@@ -31,7 +31,6 @@ export const getById = async (
     next(err);
   }
 };
-
 export const create = async (
   req: Request,
   res: Response,
@@ -156,6 +155,40 @@ export const patchOos = async (
     res.status(200).json({
       message: "Product stock availability status updated successfully",
     });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const addTag = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user: IUser = req.body.loggedInUser;
+    const productId = req.params.id;
+    const { tag_id } = req.body;
+    await productController.addTag(productId, tag_id, user);
+    res.status(200).json({ message: "Tag added successfully to the product" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const removeTag = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const productId = req.params.id;
+    const tagId = req.params.tag_id;
+    const user: IUser = req.body.loggedInUser;
+    await productController.removeTag(productId, tagId, user);
+    res
+      .status(200)
+      .json({ message: "Tag removed successfully from the product" });
   } catch (err) {
     next(err);
   }
