@@ -230,3 +230,36 @@ export const removeImage = async (
     next(err);
   }
 };
+
+export const addAliases = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const productId = req.params.id;
+    const user = req.body.loggedInUser;
+    const { aliases }: { aliases: string[] } = req.body;
+    await productController.addAliases(productId, user, aliases);
+    res.status(200).json({ message: "Aliases added successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const removeAlias = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const productId = req.params.id;
+    const user = req.body.loggedInUser;
+    const aliasId = req.params.alias_id;
+    const { reason } = req.body;
+    await productController.removeAlias(productId, user, aliasId, reason);
+    res.status(200).json({ message: "Alias removed successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
