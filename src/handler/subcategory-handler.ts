@@ -22,3 +22,26 @@ export const create = async (
     next(err);
   }
 };
+
+export const get = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const subcategories = await subcategoryController.get();
+    res.status(200).json(subcategories);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const subcatId = req.params.id;
+    const subcategory = await subcategoryController.getById(subcatId);
+    res.status(200).json(subcategory);
+  } catch (err) {
+    next(err);
+  }
+};
