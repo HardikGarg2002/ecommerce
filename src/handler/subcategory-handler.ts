@@ -45,3 +45,63 @@ export const getById = async (
     next(err);
   }
 };
+
+export const patch = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user: IUser = req.body.loggedInUser;
+    const subcatId = req.params.id;
+    const { name, desc, img_url, category_code, sort, reason } = req.body;
+    console.log(user);
+    await subcategoryController.patch(
+      subcatId,
+      reason,
+      user,
+      name,
+      desc,
+      img_url,
+      category_code,
+      sort
+    );
+    res.status(200).json({ message: "subcategory updated successfully" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const remove = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user: IUser = req.body.loggedInUser;
+    const subcatId = req.params.id;
+    const reason = req.body.reason;
+    await subcategoryController.remove(subcatId, reason, user);
+    res.status(200).json({ message: "subcategory deleted successfully" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const patchStatus = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user: IUser = req.body.loggedInUser;
+    const subcatId = req.params.id;
+    const { is_active, reason } = req.body;
+    await subcategoryController.activate(subcatId, reason, user, is_active);
+    res
+      .status(200)
+      .json({ message: "subcategory status updated successfully" });
+  } catch (err) {
+    next(err);
+  }
+};
