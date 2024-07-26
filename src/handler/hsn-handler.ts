@@ -54,7 +54,7 @@ export const patch = async (
     const id = req.params.id;
     const user: IUser = req.body.loggedInUser;
     const { code, desc, gst, reason } = req.body;
-    await hsnController.patch(id, user, reason, code, desc, gst);
+    await hsnController.patch(id, { updated: user, code, desc, gst });
     res.status(200).json({ message: "hsn updated successfully" });
   } catch (error) {
     next(error);
@@ -70,7 +70,7 @@ export const activate = async (
     const id = req.params.id;
     const user: IUser = req.body.loggedInUser;
     const { is_active, reason } = req.body;
-    await hsnController.activate(id, user, reason, is_active);
+    await hsnController.activate(id, { updated: user, is_active });
     res.status(200).json({ message: "hsn status change successfully" });
   } catch (error) {
     next(error);

@@ -1,3 +1,4 @@
+import { IHsn } from "../interface/hsn";
 import Hsn from "../model/hsn";
 
 export async function create(hsn: any) {
@@ -15,4 +16,12 @@ export async function getById(hsnId: string) {
     throw new Error("Hsn not found");
   }
   return hsn;
+}
+
+export async function patch(hsnId: string, hsnInput: Partial<IHsn>) {
+  await Hsn.findByIdAndUpdate(hsnId, hsnInput);
+}
+
+export async function activate(hsnId: string, hsnInput: Partial<IHsn>) {
+  await Hsn.findByIdAndUpdate(hsnId, hsnInput);
 }
