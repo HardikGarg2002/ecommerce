@@ -1,33 +1,32 @@
-import { IAlias, IAliasWithMeta } from "../interface/alias";
-import { IUser } from "../interface/user";
-import * as _aliasService from "../service/alias-service";
+import AliasService from '../service/alias-service';
+import { IAlias, IAliasWithMeta } from '../interface/alias';
+import { IUser } from '../interface/user';
 
 export default class AliasController {
-  public create = async (aliasInput: IAlias) => {
-    return await _aliasService.create(aliasInput);
-  };
+	private _aliasService = new AliasService();
 
-  public get = async () => {
-    return await _aliasService.get();
-  };
+	public create = async (aliasInput: IAlias) => {
+		return await this._aliasService.create(aliasInput);
+	};
 
-  public getById = async (id: string) => {
-    return await _aliasService.getById(id.trim());
-  };
+	public get = async (filters: any, pagination: any, sort: string) => {
+		const aliasesWithMeta: IAliasWithMeta = await this._aliasService.get(filters, pagination, sort);
+		return aliasesWithMeta;
+	};
 
-  public patch = async (
-    id: string,
-    reason: string,
-    user: IUser,
-    name: string
-  ) => {
-    return await _aliasService.patch(id.trim(), {
-      user,
-      name: name.trim(),
-    });
-  };
+	public getById = async (id: string) => {
+		return await this._aliasService.getById(id.trim());
+	};
 
-  public activate = async (id: string, active: boolean) => {
-    return await _aliasService.patchStatus(id.trim(), active);
-  };
+	public search = async (filters: any, pagination: any, sort: string, searchText: string): Promise<IAliasWithMeta> => {
+		return await this._aliasService.search(filters, pagination, sort, searchText.trim());
+	};
+
+	public patch = async (id: string, reason: string, user: IUser, name: string) => {
+		return await this._aliasService.patch(id.trim(), reason.trim(), user, name.trim());
+	};
+
+	public activate = async (id: string, reason: string, user: IUser, active: boolean) => {
+		return await this._aliasService.activate(id.trim(), reason.trim(), user, active);
+	};
 }
