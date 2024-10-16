@@ -8,6 +8,16 @@ import { APIError } from '@hardikgarg2002/node-errorify';
 export default class FeatureService {
 	private _productService = new ProductService();
 	private allowedQueryFields = ['name', 'desc', 'code', 'type', 'sort', 'created.name', 'updated.name'];
+	private async _validateNameAndCodeUnique(name: string, code?: string) {
+		const matchedFeature: IFeature[] = await Feature.find({
+			$or: [
+				{ name: { $regex: new RegExp(`^${name?.trim()}$`), $options: 'i' } },
+				{ code: { $regex: new RegExp(`^${code?.trim()}$`), $options: 'i' } },
+			],
+		});
+		if (matchedFeature.length > 0)
+			throw APIError.BusinessError('feature with the same name/code already exists in database', 'ERR_DUPLICATE');
+	}
 
 	private async save(featureInput: IFeature, isNew: boolean = false): Promise<IFeature> {
 		const feature = new Feature(featureInput);
@@ -101,4 +111,44 @@ export default class FeatureService {
 		};
 		return data;
 	};
+
+	public async create(featureInput: IFeature): Promise<string> {
+		await this._validateNameAndCodeUnique(featureInput.name, featureInput.code);
+		const newFeature = await this.save(featureInput, true);
+
+		return newFeature._id!;
+	}
+
+	public async patch(
+		updated: IUser,
+		id: string,
+		reason: string,
+		name?: string,
+		desc?: string,
+		sort?: number,
+	): Promise<void> {
+		const existingFeature = await this.getById(id);
+		name && existingFeature.name.toLowerCase() != name.toLowerCase() && (await this._validateNameAndCodeUnique(name));
+		if (sort) {
+			await this._productService.updateSortOftheProductFeature(existingFeature.code, sort, updated);
+		}
+		const updatedFeature: IFeature = {
+			...existingFeature,
+			name: name ?? existingFeature.name,
+			desc: desc ?? existingFeature.desc,
+			sort: sort ?? existingFeature.sort,
+			updated,
+		};
+		const savedFeature = await this.save(updatedFeature);
+	}
+
+	public async remove(user: IUser, id: string, reason: string) {
+		// to do find if not associated to any product //
+		const feature = await this.getById(id);
+		const productsAssociated = await this._productService.getProductsWithFeatureCode(feature.code);
+		if (productsAssociated.length > 0) {
+			throw APIError.BusinessError('features associated to the products cannot be deleted', 'ERR_EXIST');
+		}
+		await Feature.findByIdAndDelete(id).lean();
+	}
 }
