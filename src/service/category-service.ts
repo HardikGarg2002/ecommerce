@@ -120,7 +120,7 @@ export default class CategoryService {
 		/// Deactivate the sub categories similarly to be done for the product also
 		if (is_activeInput !== undefined && is_activeInput === false) {
 			await this._subCategoryService.deactivateByCategoryCode(existingCategory.code!, updated);
-			// await this._productService.deactivateByCategoryCode(existingCategory.code!, updated);
+			await this._productService.deactivateByCategoryCode(existingCategory.code!, updated);
 		}
 		const updatedCategory: ICategory = {
 			...existingCategory,
