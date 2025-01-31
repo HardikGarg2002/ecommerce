@@ -92,7 +92,7 @@ All `GET` endpoints return paginated responses in the following format:
     "totalPages": 10 // Total number of pages
   }
 }
-
+```
 flowchart TD
   subgraph Actors
     Customer
