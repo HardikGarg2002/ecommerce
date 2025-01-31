@@ -93,6 +93,7 @@ All `GET` endpoints return paginated responses in the following format:
   }
 }
 ```
+```mermaid
 flowchart TD
   subgraph Actors
     Customer
