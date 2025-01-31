@@ -94,6 +94,113 @@ All `GET` endpoints return paginated responses in the following format:
 }
 ```
 ```mermaid
+erDiagram
+  USERS {
+    string _id
+    string name
+    boolean is_active
+  }
+  CUSTOMER {
+    string _id
+    string auth_id
+    string name
+    string mobile
+    string email
+    string status
+  }
+  ORDER {
+    string _id
+    string customer_id
+    date order_date
+    string status
+    number total_order_amount
+  }
+  PRODUCT {
+    string _id
+    string name
+    string desc
+    string sku
+    string category_code
+    string subcategory_code
+  }
+  CATEGORY {
+    string _id
+    string name
+    string desc
+    string code
+    boolean is_active
+    string img_url
+  }
+  SUBCATEGORY {
+    string _id
+    string name
+    string desc
+    string code
+    boolean is_active
+    string category_code
+    string img_url
+  }
+  ADDRESS {
+    string _id
+    string name
+    string contact_phone
+    string address_type
+    string address
+    string city
+    string state
+    string country
+    string pincode
+  }
+  BANNER {
+    string _id
+    string name
+    string desc
+    string code
+    date start_date
+    date end_date
+    string img_url
+    string redirect_url
+    string location_type
+    string location_code
+  }
+  FEATURE {
+    string _id
+    string name
+    string desc
+    string code
+    string type
+    number sort
+  }
+  HSN {
+    string _id
+    string code
+    string desc
+    number gst
+    boolean is_active
+  }
+  TAG {
+    string _id
+    string text
+    string slug
+    boolean is_active
+  }
+  VARIANT {
+    string _id
+    string type
+    string products
+  }
+
+  USERS ||--o{ CUSTOMER : "creates"
+  CUSTOMER ||--o{ ORDER : "places"
+  ORDER ||--o{ PRODUCT : "contains"
+  PRODUCT }o--|| CATEGORY : "belongs to"
+  PRODUCT }o--|| SUBCATEGORY : "belongs to"
+  PRODUCT }o--|| HSN : "uses"
+  PRODUCT }o--|| VARIANT : "has"
+  CUSTOMER ||--o{ ADDRESS : "has"
+  BANNER }o--|| BANNER_TYPE : "uses"
+```
+```mermaid
 flowchart TD
   subgraph Actors
     Customer
