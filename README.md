@@ -223,3 +223,135 @@ flowchart TD
   Admin --> ManageProducts
   Admin --> ManageCategories
   Admin --> ManageOrders
+
+```
+```mermaid
+flowchart TD
+  %% Entry Point
+  A[Request] --> B[API Gateway]
+
+  %% API Gateway Routes to Microservices
+  B --> C[User Service]
+  B --> D[Order Service]
+  B --> E[Product Service]
+  B --> F[Inventory Service]
+  B --> G[Payment Service]
+  B --> H[Shipping Service]
+  B --> I[Notification Service]
+  B --> J[Search Service]
+  B --> K[Review Service]
+  B --> L[Discount Service]
+  B --> M[Analytics Service]
+  B --> N[Auth Service]
+  B --> O[Config Service]
+  B --> P[Logging Service]
+
+  %% Shared Caching (Redis)
+  C --> Q[Redis Cache]
+  D --> Q
+  E --> Q
+  F --> Q
+  G --> Q
+  H --> Q
+  I --> Q
+  J --> Q
+  K --> Q
+  L --> Q
+  M --> Q
+  N --> Q
+  O --> Q
+  P --> Q
+
+  %% Internal Routing within a Microservice
+  subgraph Microservice Flow
+    C --> R[Internal Routing]
+    D --> S[Internal Routing]
+    E --> T[Internal Routing]
+    F --> U[Internal Routing]
+    G --> V[Internal Routing]
+    H --> W[Internal Routing]
+    I --> X[Internal Routing]
+    J --> Y[Internal Routing]
+    K --> Z[Internal Routing]
+    L --> AA[Internal Routing]
+    M --> AB[Internal Routing]
+    N --> AC[Internal Routing]
+    O --> AD[Internal Routing]
+    P --> AE[Internal Routing]
+  end
+
+  %% Authentication & Authorization
+  R --> AF[Authentication & Authorization]
+  S --> AF
+  T --> AF
+  U --> AF
+  V --> AF
+  W --> AF
+  X --> AF
+  Y --> AF
+  Z --> AF
+  AA --> AF
+  AB --> AF
+  AC --> AF
+  AD --> AF
+  AE --> AF
+
+  %% Input Sanitization & Validation
+  AF --> AG[Input Sanitization & Validation]
+
+  %% Business Logic Validation
+  AG --> AH[Business Logic Validation]
+  AH --> AI[Check Data with Other Services]
+  AH --> AJ[Check Data with Own Service]
+
+  %% Database Layer
+  AI --> AK[Database Layer]
+  AJ --> AK
+  AK --> AL[(MongoDB)]
+
+  %% Error Handling
+  AK --> AM{Error?}
+  AM -->|Yes| AN[Error Handling\n@hardikgarg2002/nodeErrorify]
+  AM -->|No| AO[Success]
+
+  %% Response
+  AN --> AP[Response: 400/500]
+  AO --> AQ[Response: 200]
+
+  %% Database Utilities
+  AL --> AR[Database Utilities\n@hardikgarg2002/mongodb_utils]
+```
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Client
+    participant API_Gateway
+    participant Microservice_X
+    participant Other_Microservice
+    participant Redis_Cache
+    participant MongoDB
+
+    Client->>API_Gateway: Send Request (e.g., /orders)
+    API_Gateway->>API_Gateway: Validate JWT Token
+    API_Gateway->>Microservice_X: Forward Request (Auth Passed)
+
+    Microservice_X->>Microservice_X: Validate & Sanitize Input
+    Microservice_X->>Microservice_X: Business Logic Execution
+
+    alt Cache Available
+        Microservice_X->>Redis_Cache: Fetch Data from Cache
+        Redis_Cache-->>Microservice_X: Return Cached Data
+    else Cache Miss
+        Microservice_X->>Other_Microservice: Fetch Data from Another Service
+        Other_Microservice-->>Microservice_X: Return Response
+        Microservice_X->>MongoDB: Read/Write Database using @hardikgarg2002/mongodb_utils
+        MongoDB-->>Microservice_X: Return Data
+        Microservice_X->>Redis_Cache: Store Data in Cache
+    end
+
+    Microservice_X->>Microservice_X: Handle Errors using @hardikgarg2002/nodeErrorify
+    Microservice_X-->>API_Gateway: Send Response (200, 400, 500)
+    API_Gateway-->>Client: Return API Response
+
+```
