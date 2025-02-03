@@ -355,3 +355,61 @@ sequenceDiagram
     API_Gateway-->>Client: Return API Response
 
 ```
+
+
+```mermaid
+flowchart TD
+  %% Entry Point
+  A[Request] --> B[API Gateway]
+
+  %% API Gateway Routes to Microservices
+  B --> C[Microservice 1]
+  B --> D[Microservice 2]
+  B --> E[...]
+  B --> F[Microservice 14]
+
+  %% Shared Caching (Redis)
+  C --> G[Redis Cache]
+  D --> G
+  E --> G
+  F --> G
+
+  %% Internal Routing within a Microservice
+  subgraph Microservice Flow
+    C --> H[Internal Routing]
+    D --> I[Internal Routing]
+    E --> J[Internal Routing]
+    F --> K[Internal Routing]
+  end
+
+  %% Authentication & Authorization
+  H --> L[Authentication & Authorization]
+  I --> L
+  J --> L
+  K --> L
+
+  %% Input Sanitization & Validation
+  L --> M[Input Sanitization & Validation]
+
+  %% Business Logic Validation
+  M --> N[Business Logic Validation]
+  N --> O[Check Data with Other Services]
+  N --> P[Check Data with Own Service]
+
+  %% Database Layer
+  O --> Q[Database Layer]
+  P --> Q
+  Q --> R[(MongoDB)]
+
+  %% Error Handling
+  Q --> S{Error?}
+  S -->|Yes| T[Error Handling\n@hardikgarg2002/nodeErrorify]
+  S -->|No| U[Success]
+
+  %% Response
+  T --> V[Response: 400/500]
+  U --> W[Response: 200]
+
+  %% Database Utilities
+  R --> X[Database Utilities\n@hardikgarg2002/mongodb_utils]
+```
