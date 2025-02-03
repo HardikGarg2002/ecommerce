@@ -23,7 +23,7 @@ This is a production-level e-commerce application designed to manage products, c
 ## Architecture Diagram
 ![image](https://github.com/user-attachments/assets/06bd391f-1c68-456c-a408-b543c9a15c23)
 
-![Microservices Data Flow Diagram](https://hardikgarg2002.github.io/ecommerce/design_document.drawio.html)
+[View Interactive Diagram] ![Microservices Data Flow Diagram](https://hardikgarg2002.github.io/ecommerce/design_document.drawio.html)
 
 ---
 
